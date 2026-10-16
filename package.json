@@ -1,17 +1,7 @@
 {
-  "name": "jagan-space-portfolio",
-  "private": true,
+  "name": "jagan-portfolio",
   "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "three": "^0.180.0"
-  },
-  "devDependencies": {
-    "vite": "^7.1.7"
-  }
+  "private": true,
+  "description": "Jagan's deep-space portfolio (static site)",
+  "scripts": { "start": "npx serve ." }
 }

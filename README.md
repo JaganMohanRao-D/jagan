@@ -1,56 +1,58 @@
-# Jagan — Space Portfolio
+# Jagan — Student Developer Portfolio
 
-A responsive, single-page portfolio for Jagan Mohan Rao Dunna. It uses a deep-space visual language, editorial serif typography, an animated Three.js starfield/planet, launch overlay, custom reticle cursor, scroll reveals, constellation-style milestones, interactive skills cloud, and two verified project cards.
-
-## Requirements
-
-- Node.js 20.19+ (or a compatible current LTS release)
-- npm
+A deep-space portfolio: Three.js launch + orbit hero, planet project cards, "Deep Space Network" reports panel,
+swipeable constellation experience section, and an interactive 3D skills cloud.
+It is a static site (no build step). Three.js and all fonts are bundled locally, so it makes **no external requests**.
 
 ## Run locally
 
-```bash
-npm install
-npm run dev
-```
-
-Open the local URL Vite prints in the terminal.
-
-## Production build
+ES modules and import maps need an HTTP server (opening `index.html` by double-click will not work).
 
 ```bash
-npm run build
-npm run preview
+# any one of these, from this folder:
+python3 -m http.server 8000      # then open http://localhost:8000
+npx serve .                      # or: npm start
 ```
-
-The deployable static site is generated in `dist/`.
 
 ## Deploy to Vercel
 
-1. Extract the ZIP.
-2. Open the extracted folder in a terminal.
-3. Run `npm install` and confirm `npm run build` works.
-4. Import the folder into Vercel, or push it to a repository you control and import that repository.
-5. Framework preset: **Vite**.
-6. Build command: `npm run build`.
-7. Output directory: `dist`.
-8. Deploy.
+**Option A: CLI**
+```bash
+npm i -g vercel
+vercel          # first deploy (accept defaults; Framework Preset: Other, no build command, output dir: .)
+vercel --prod
+```
 
-No environment variables are required.
+**Option B: Dashboard**
+1. Push this folder to a GitHub repository.
+2. On vercel.com choose **Add New → Project**, import the repo.
+3. Framework Preset: **Other**. Leave Build Command empty and Output Directory as `.`  then **Deploy**.
 
-## Personalization
+## Things to personalise
 
-- Replace `public/profile-placeholder.svg` with a photo you own. For best results use a square image, then update the `src` in `index.html` if you change the filename.
-- Main page content is in `index.html`.
-- Interactions and Three.js scene are in `src/main.js`.
-- Visual styling and responsive breakpoints are in `src/style.css`.
-- The portfolio deliberately lists only **Naa College** and **Plantmokk AI**. It does not include reports, job history, internships, clients, or certifications because none were supplied.
-- Fonts are loaded from Google Fonts. The Three.js dependency is installed locally through npm and bundled by Vite; no iframe or runtime HTML replacement is used.
+| What | Where |
+|---|---|
+| Profile photo (currently a placeholder) | Replace `assets/img/profile-placeholder.svg`, or change the `<img class="me_pic">` `src` in `index.html` |
+| Projects | `<section id="projects">` in `index.html` (one `<a class="planet-card">` each) |
+| Reports | `<section id="reports">`. Currently shows an idle "No reports yet" row. Add rows copied from the idle row, make them `<a href="reports/your-file.pdf">`, drop the `dsn-row--idle` class, and update the "00 packets" counter |
+| Experience / achievements | `JOBS` array in the inline script of `index.html` (keep 5 entries: the constellations have 5 anchor stars) |
+| Skills | `.cloud-tag` spans in `<section id="skills">` |
+| Social links | `.social-card` in the About section |
 
-## Accessibility and behavior
+## Structure
 
-- Responsive navigation for mobile.
-- Keyboard-visible focus outlines and skip link.
-- Reduced-motion preferences are respected for most motion effects.
-- Three.js failure falls back to the CSS starry background.
-- Project links open the supplied live websites. GitHub, LinkedIn, and email links use Jagan's supplied contact details.
+```
+index.html            page markup + scripts (Three.js scene, interactions)
+assets/styles.css     all styles
+assets/fonts.css      self-hosted @font-face rules
+assets/fonts/         Instrument Serif, Inter Tight, JetBrains Mono (woff2)
+assets/img/           placeholder photo, favicon, constellation line art
+vendor/three/         Three.js r160 + the post-processing addons used
+vercel.json           static hosting config
+```
+
+## Credits
+
+Design and interaction concept adapted from an open-source portfolio template, reused with the original author's permission.
+Constellation figures: Sidney Hall, *Urania's Mirror* (1825), public domain.
+Social-card style from Uiverse.io (Valeron-T). Three.js is MIT licensed; fonts are SIL OFL.
